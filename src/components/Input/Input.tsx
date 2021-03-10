@@ -25,8 +25,8 @@ const useStyles = createUseStyles({
 });
 
 export const Input = ({ type, placeholder }: Props): JSX.Element => {
-    const classes = useStyles();
+    const styles = useStyles();
     return (
-        <input className={`${classes.input} ${classes[type]}`} placeholder={placeholder}></input>
+        <input className={`${styles.input} ${styles[type]}`} placeholder={placeholder}></input>
     )
 }

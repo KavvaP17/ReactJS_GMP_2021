@@ -21,10 +21,10 @@ const useStyles = createUseStyles({
 })
 
 export const SortByFilter = (): JSX.Element => {
-    const classes = useStyles();
+    const styles = useStyles();
     return (
-        <div className={classes.sortByFilter}>
-            <span className={classes.filterLabel}>Sort by</span>
+        <div className={styles.sortByFilter}>
+            <span className={styles.filterLabel}>Sort by</span>
             <Dropdown options={sortByOptions} />
         </div>
     )

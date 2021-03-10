@@ -17,9 +17,9 @@ type Props = {
 };
 
 export const Footer = ({children}: Props): JSX.Element => {
-    const classes = useStyles();
+    const styles = useStyles();
     return (
-        <div className={classes.footer}>
+        <div className={styles.footer}>
             {children}
         </div>
     )

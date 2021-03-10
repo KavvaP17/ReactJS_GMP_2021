@@ -11,27 +11,39 @@ const useStyles = createUseStyles({
     },
     searchInputContainer: {
         display: 'flex',
-        flexDirection: 'row'
-
+        flexDirection: 'row',
     },
     searchInputLabel: {
         color: '#ffffff',
         fontSize: 50,
         textTransform: 'uppercase',
         marginBottom: '50px'
+    },
+    searchInputWrapper: {
+        flex: 4,
+        marginRight: 20
+    },
+    searchBtnWrapper: {
+        flex: 1,
+        marginLeft: 20
     }
+
 });
 
 export const SearchBar = (): JSX.Element => {
-    const classes = useStyles();
+    const styles = useStyles();
     return (
-        <div className={classes.searchBarContainer}>
-            <span className={classes.searchInputLabel}>
+        <div className={styles.searchBarContainer}>
+            <span className={styles.searchInputLabel}>
                 find your movie
             </span>
-            <div className={classes.searchInputContainer}>
-                <Input  type='search' placeholder='What do you want to watch?'/>
-                <Button title='Search' color='red'/>
+            <div className={styles.searchInputContainer}>
+                <div className={styles.searchInputWrapper}>
+                    <Input  type='search' placeholder='What do you want to watch?'/>
+                </div>
+                <div className={styles.searchBtnWrapper}>
+                    <Button title='Search' color='red'/>
+                </div>
             </div>
         </div>
     )

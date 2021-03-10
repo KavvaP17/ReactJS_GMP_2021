@@ -12,10 +12,10 @@ const useStyles = createUseStyles({
 })
 
 export const Logo = (): JSX.Element => {
-    const classes = useStyles();
+    const styles = useStyles();
     return (
-        <div className={classes.logo}>
-            <span className={classes.logoBold}>netflix</span>
+        <div className={styles.logo}>
+            <span className={styles.logoBold}>netflix</span>
             <span>roulette</span>
         </div>
     )

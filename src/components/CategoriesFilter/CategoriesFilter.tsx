@@ -53,12 +53,12 @@ const useStyles = createUseStyles({
 })
 
 export const CategoriesFilter = (): JSX.Element => {
-    const classes = useStyles();
+    const styles = useStyles();
     return (
-        <ul className={classes.categoriesWrapper}>
+        <ul className={styles.categoriesWrapper}>
             {categories.map((category, index) => (
                 <li key={index}
-                    className={`${classes.category} ${category.active ? classes.categoryActive : ''}`}>
+                    className={`${styles.category} ${category.active ? styles.categoryActive : ''}`}>
                     {category.title}
                 </li>
             ))}

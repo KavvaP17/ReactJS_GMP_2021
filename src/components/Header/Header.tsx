@@ -21,10 +21,10 @@ const useStyles = createUseStyles({
 });
 
 export const Header = (): JSX.Element => {
-    const classes = useStyles();
+    const styles = useStyles();
     return (
-        <div className={classes.headerContainer}>
-            <div className={classes.topContainer}>
+        <div className={styles.headerContainer}>
+            <div className={styles.topContainer}>
                 <Logo />
                 <Button title='+Add movie' color='transparent'/>
             </div>

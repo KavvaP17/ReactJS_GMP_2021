@@ -23,9 +23,9 @@ const useStyles = createUseStyles({
 })
 
 export const Dropdown = ({ options }: Props): JSX.Element => {
-    const classes = useStyles();
+    const styles = useStyles();
     return (
-        <select className={classes.dropdown}>
+        <select className={styles.dropdown}>
             {options.map((option, index) => (
                 <option key={index} value={option.title}>
                     {option.title}

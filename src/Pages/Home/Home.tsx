@@ -13,64 +13,60 @@ const useStyles = createUseStyles({
 
 const mockMoviesList = [
     {
-        year: '1999',
         title: 'Fight Club',
         category: 'Thriller',
-        image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg'
-
-    },
-    {
         year: '1999',
-        title: 'Fight Club',
-        category: 'Thriller',
-        image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg'
-
-    },
-    {
-        year: '1999',
-        title: 'Fight Club',
-        category: 'Thriller',
-        image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg'
-
-    },
-    {
-        year: '1999',
-        title: 'Fight Club',
-        category: 'Thriller',
-        image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg'
-
-    },
-    {
-        year: '1999',
-        title: 'Fight Club',
-        category: 'Thriller',
         image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg'
     },
     {
-        year: '1999',
         title: 'Fight Club',
         category: 'Thriller',
+        year: '1999',
         image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg'
     },
     {
-        year: '1999',
         title: 'Fight Club',
         category: 'Thriller',
+        year: '1999',
         image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg'
     },
     {
-        year: '1999',
         title: 'Fight Club',
         category: 'Thriller',
+        year: '1999',
+        image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg'
+    },
+    {
+        title: 'Fight Club',
+        category: 'Thriller',
+        year: '1999',
+        image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg'
+    },
+    {
+        title: 'Fight Club',
+        category: 'Thriller',
+        year: '1999',
+        image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg'
+    },
+    {
+        title: 'Fight Club',
+        category: 'Thriller',
+        year: '1999',
+        image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg'
+    },
+    {
+        title: 'Fight Club',
+        category: 'Thriller',
+        year: '1999',
         image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg'
     }
 ];
 
 
 export const Home = (): JSX.Element => {
-    const classes = useStyles();
+    const styles = useStyles();
     return (
-        <div className={classes.mainWrapper}>
+        <div className={styles.mainWrapper}>
             <FilterBar />
             <MoviesList moviesList={mockMoviesList}/>
         </div>

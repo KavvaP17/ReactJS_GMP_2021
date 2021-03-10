@@ -35,15 +35,15 @@ const useStyles = createUseStyles({
 });
 
 export const MoviesList = ({ moviesList }: Props): JSX.Element => {
-    const classes = useStyles();
+    const styles = useStyles();
     const moviesNumber = moviesList.length;
     return (
-        <div className={classes.moviesList}>
-            <div className={classes.moviesNumber}>
+        <div className={styles.moviesList}>
+            <div className={styles.moviesNumber}>
                 <span className='bold'>{moviesNumber}</span>
                 <span>{` movie${moviesNumber > 1 ? 's' : ''} found`}</span>
             </div>
-            <div className={classes.movieCards}>
+            <div className={styles.movieCards}>
                 {moviesList.map((movie, index) => (
                     <MovieCard key={index} movie={movie} />
                 ))}

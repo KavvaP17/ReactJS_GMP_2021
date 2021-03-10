@@ -18,6 +18,7 @@ const useStyles = createUseStyles({
     red: {
         color: '#ffffff',
         backgroundColor: '#f65261',
+        width: '100%'
     },
     transparent: {
         backgroundColor: 'rgba(85, 85, 85, 0.8)',
@@ -26,8 +27,8 @@ const useStyles = createUseStyles({
 });
 
 export const Button = ({ title, color }: Props): JSX.Element => {
-    const classes = useStyles();
+    const styles = useStyles();
     return (
-        <button className={`${classes.button} ${classes[color]}`}>{title}</button>
+        <button className={`${styles.button} ${styles[color]}`}>{title}</button>
     )
 }

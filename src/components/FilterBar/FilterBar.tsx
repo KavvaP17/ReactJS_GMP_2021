@@ -14,9 +14,9 @@ const useStyles = createUseStyles({
 })
 
 export const FilterBar = (): JSX.Element => {
-    const classes = useStyles();
+    const styles = useStyles();
     return (
-        <div className={classes.filterBar}>
+        <div className={styles.filterBar}>
             <CategoriesFilter />
             <SortByFilter />
         </div>

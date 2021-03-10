@@ -1,6 +1,7 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { Movie } from '../MoviesList/MoviesList';
+import { MovieContextMenu } from '../MovieContextMenu';
 
 type Props = {
     movie: Movie
@@ -9,7 +10,12 @@ type Props = {
 const useStyles = createUseStyles({
     movieCard: {
         width: 300,
-        margin: '20px 2%'
+        margin: '20px 2%',
+        position: 'relative',
+
+        '&:hover .context-menu': {
+            display: 'block'
+        }
 
     },
     movieImage: {
@@ -39,24 +45,34 @@ const useStyles = createUseStyles({
         padding: '4px 8px',
         height: 16,
         borderRadius: 5
+    },
+    movieContextMenu: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        cursor: 'pointer',
+        display: 'none'
     }
 
 });
 
 export const MovieCard = ({ movie }: Props): JSX.Element => {
-    const classes = useStyles();
+    const styles = useStyles();
     const {image, title, category, year} = movie;
     return (
-        <div className={classes.movieCard}>
-            <div className={classes.movieImage}>
+        <div className={styles.movieCard}>
+            <div className={`${styles.movieContextMenu} context-menu`}>
+                <MovieContextMenu />
+            </div>
+            <div className={styles.movieImage}>
                 <img src={image}></img>
             </div>
-            <div className={classes.movieDescription}>
+            <div className={styles.movieDescription}>
                 <div>
                     <div className='title'>{title}</div>
                     <div className='category'>{category}</div>
                 </div>
-                <div className={classes.movieReleaseDate}>{year}</div>
+                <div className={styles.movieReleaseDate}>{year}</div>
             </div>
         </div>
     )
