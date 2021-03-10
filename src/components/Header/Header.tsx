@@ -1,8 +1,8 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
-import { Logo } from '../../components/Logo';
-import { Button } from '../../components/Button';
-import { SearchBar } from '../../components/SearchBar';
+import { Logo } from '../Logo';
+import { Button } from '../Button';
+import { SearchBar } from '../SearchBar';
 
 const useStyles = createUseStyles({
     headerContainer: {
