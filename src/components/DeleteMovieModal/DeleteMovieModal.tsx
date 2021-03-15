@@ -2,10 +2,6 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { Button } from '../Button';
 
-type Props = {
-    onDelete: () => void;
-};
-
 const useStyles = createUseStyles({
     header: {
         fontSize: 35,
@@ -29,7 +25,7 @@ const useStyles = createUseStyles({
     }
 });
 
-export const DeleteMovieModal = ({onDelete}: Props): JSX.Element => {
+export const DeleteMovieModal = (): JSX.Element => {
     const styles = useStyles();
     return (
         <>
@@ -39,7 +35,7 @@ export const DeleteMovieModal = ({onDelete}: Props): JSX.Element => {
             </p>
             <div className={styles.actionContainer}>
                 <div className={styles.confirmBtn}>
-                    <Button color='red' title='confirm' clickHandler={onDelete}></Button>
+                    <Button color='red' title='confirm' clickHandler={()=>{console.log('delete')}}></Button>
                 </div>
             </div>
         </>

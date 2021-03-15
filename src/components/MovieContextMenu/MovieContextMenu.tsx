@@ -1,25 +1,35 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CloseIcon from '@material-ui/icons/Close';
+import { Modal } from '../Modal';
+import { EditMovieModal } from '../EditMovieModal';
+import { DeleteMovieModal } from '../DeleteMovieModal';
 
 type Props = {
     isVisible: boolean,
     onOpen: () => void,
     onClose: () => void,
-    itemClickHandler: (type: string) => void
 }
 
-const contextMenuOptions = [
+type ContextMenyOption = {
+    title: string,
+    key: string,
+    content: JSX.Element
+}
+
+const contextMenuOptions: ContextMenyOption[] = [
     {
         title: 'Edit',
-        key: 'edit'
+        key: 'edit',
+        content: <EditMovieModal />
     },
     {
         title: 'Delete',
-        key: 'delete'
+        key: 'delete',
+        content: <DeleteMovieModal />
     }
-]
+];
 
 const useStyles = createUseStyles({
     contextMenuBtn: {
@@ -65,9 +75,18 @@ const useStyles = createUseStyles({
     }
 });
 
-export const MovieContextMenu = ({isVisible,
-    onOpen, onClose, itemClickHandler}: Props): JSX.Element => {
+export const MovieContextMenu = ({isVisible, onOpen, onClose}: Props): JSX.Element => {
     const styles = useStyles();
+    const modal = useRef(null);
+    const [
+        selectedItem,
+        setSelectedItem
+    ] = useState<ContextMenyOption | null>(null);
+
+    const openModal = (item: ContextMenyOption): void => {
+        setSelectedItem(item);
+        modal.current.open();
+    }
 
     return (
         <>
@@ -82,13 +101,16 @@ export const MovieContextMenu = ({isVisible,
                 <ul className={styles.contextMenuItems}>
                     {contextMenuOptions.map((option) => (
                         <li key={option.key}
-                            onClick={()=>{itemClickHandler(option.key)}}
+                            onClick={()=>{openModal(option)}}
                             className={styles.menuItem}>
                             {option.title}
                         </li>
                     ))}
                 </ul>
             </div>
+            <Modal ref={modal}>
+                {selectedItem ? selectedItem.content : <></>}
+            </Modal>
         </>
     )
 }

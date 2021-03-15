@@ -1,31 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 
 type Category = {
-    title: string,
-    active: boolean
+    title: string
 };
 
-const categories: Category[] = [
+const categoriesMock: Category[] = [
     {
         title: 'All',
-        active: true
     },
     {
         title: 'Documentary',
-        active: false
     },
     {
         title: 'Comedy',
-        active: false
     },
     {
         title: 'Horror',
-        active: false
     },
     {
         title: 'Crime',
-        active: false
     },
 ];
 
@@ -54,11 +48,18 @@ const useStyles = createUseStyles({
 
 export const CategoriesFilter = (): JSX.Element => {
     const styles = useStyles();
+    const [activeCategorie, setActiveCategorie] = useState(categoriesMock[0]);
+
+    const categorieClickHandler = (category: Category) => {
+        setActiveCategorie(category);
+    };
+
     return (
         <ul className={styles.categoriesWrapper}>
-            {categories.map((category, index) => (
+            {categoriesMock.map((category, index) => (
                 <li key={index}
-                    className={`${styles.category} ${category.active ? styles.categoryActive : ''}`}>
+                    className={`${styles.category} ${category.title ===  activeCategorie.title? styles.categoryActive : ''}`}
+                    onClick={()=>{categorieClickHandler(category)}}>
                     {category.title}
                 </li>
             ))}

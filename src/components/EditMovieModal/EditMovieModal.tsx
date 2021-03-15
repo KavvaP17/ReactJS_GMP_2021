@@ -38,6 +38,10 @@ const useStyles = createUseStyles({
         textTransform: 'uppercase',
         margin: '20px 0 10px'
     },
+    movieId: {
+        fontSize: 18,
+        color: '#ffffff'
+    },
     buttonsContainer: {
         margin: '50px 0 10px',
         display: 'flex',
@@ -79,7 +83,7 @@ export const EditMovieModal = (): JSX.Element => {
         <>
             <h2 className={styles.header}>edit movie</h2>
             <p className={styles.lable}>movie id</p>
-            <Input type='readonly' value={movieDate.movieId} />
+            <p className={styles.movieId}>{movieDate.movieId}</p>
             <p className={styles.lable}>title</p>
             <Input type='default' value={movieDate.title} />
             <p className={styles.lable}>release date</p>

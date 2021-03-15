@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useImperativeHandle, useState, useCallback, forwardRef } from 'react';
+import { createPortal } from 'react-dom';
 import { createUseStyles } from 'react-jss';
 import CloseIcon from '@material-ui/icons/Close';
 import { Footer } from '../Footer';
 import { Logo } from '../Logo';
-import { DeleteMovieModal } from '../DeleteMovieModal';
-import { AddMovieModal } from '../AddMovieModal';
-import { EditMovieModal } from '../EditMovieModal';
 
-export type ModalType = 'delete' | 'edit' | 'add' | undefined;
+const modalElement = document.getElementById('modal-root') as Element;
 
 const useStyles = createUseStyles({
+    modalWrapper: {
+        position: 'fixed',
+        top: 0,
+        right: 0,
+        left: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(23, 23, 23, 0.9)',
+        overflow: 'auto',
+        backdropFilter: 'blur(5px)'
+    },
     modal: {
         minHeight: '100%',
         position: 'relative',
@@ -42,47 +50,42 @@ const useStyles = createUseStyles({
 });
 
 type Props = {
-    type: ModalType,
-    onClose: () => void
+    children: JSX.Element,
+    defaultOpened?: boolean
 };
 
-export const Modal = ({onClose, type}: Props): JSX.Element => {
+const ModalComponent = ({children, defaultOpened = false}: Props, ref: React.Ref<unknown>): JSX.Element => {
     const styles = useStyles();
+    const [isOpen, setIsOpen] = useState(defaultOpened);
 
-    const deleteMovie = () => {
-        console.log(type);
-        onClose();
-    }
-    let ModalContent: JSX.Element = <></>;
+    const close = useCallback(() => setIsOpen(false), [])
 
-    switch (type) {
-        case 'delete':
-            ModalContent = <DeleteMovieModal onDelete={deleteMovie} />
-            break;
-        case 'add':
-            ModalContent = <AddMovieModal />
-            break;
-        case 'edit':
-            ModalContent = <EditMovieModal />
-            break;
-    }
+    useImperativeHandle(ref, () => ({
+        open: () => setIsOpen(true),
+        close: () => setIsOpen(false),
+    }));
 
-    return (
-        <div className={styles.modal}>
-            <div className={styles.logoContainer}>
-                <Logo />
-            </div>
-            <div className={styles.modalContent}>
-                <div className={styles.closeBtn}>
-                    <CloseIcon onClick={onClose}/>
-                </div>
-                {ModalContent}
-            </div>
-            <div className={styles.footer}>
-                <Footer>
+    const ModalContent =
+        <div className={styles.modalWrapper}>
+            <div className={styles.modal}>
+                <div className={styles.logoContainer}>
                     <Logo />
-                </Footer>
+                </div>
+                <div className={styles.modalContent}>
+                    <div className={styles.closeBtn}>
+                        <CloseIcon onClick={close} />
+                    </div>
+                    {children}
+                </div>
+                <div className={styles.footer}>
+                    <Footer>
+                        <Logo />
+                    </Footer>
+                </div>
             </div>
-        </div>
-    )
+        </div>;
+
+    return createPortal(isOpen ? ModalContent : null, modalElement);
 }
+
+export const Modal = forwardRef(ModalComponent);

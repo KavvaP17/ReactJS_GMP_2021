@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 
 type Props = {
-    type: 'search' | 'default' | 'readonly'
+    type: 'search' | 'default'
     placeholder?: string,
     value?: string
 };
@@ -23,17 +23,20 @@ const useStyles = createUseStyles({
     },
     default: {
         backgroundColor: '#555555',
-    },
-    readonly: {
-        backgroundColor: '#232323',
     }
 });
 
 export const Input = ({ type, placeholder, value }: Props): JSX.Element => {
     const styles = useStyles();
+    const [inputValue, setInputValue] = useState(value);
+
+    const handleInputValueChange = (event: React.ChangeEvent<{ value: string }>) => {
+        setInputValue(event.target.value as string);
+    };
+
     return (
         <input className={`${styles.input} ${styles[type]}`} placeholder={placeholder}
-            value={value}
-            {...type === 'readonly' ? 'readonly' : ''} />
+            value={inputValue}
+            onChange={handleInputValueChange}/>
     )
 }

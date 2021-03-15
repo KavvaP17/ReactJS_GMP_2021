@@ -4,8 +4,7 @@ import { Movie } from '../MoviesList/MoviesList';
 import { MovieContextMenu } from '../MovieContextMenu';
 
 type Props = {
-    movie: Movie,
-    openModal: (type: string) => void
+    movie: Movie
 }
 
 const useStyles = createUseStyles({
@@ -57,7 +56,7 @@ const useStyles = createUseStyles({
 
 });
 
-export const MovieCard = ({ movie, openModal }: Props): JSX.Element => {
+export const MovieCard = ({ movie }: Props): JSX.Element => {
     const styles = useStyles();
 
     const [
@@ -81,8 +80,7 @@ export const MovieCard = ({ movie, openModal }: Props): JSX.Element => {
                 <MovieContextMenu
                     isVisible={movieContexMenuIsVisible}
                     onOpen={openContextMenu}
-                    onClose={closeContextMenu}
-                    itemClickHandler={openModal}/>
+                    onClose={closeContextMenu}/>
             </div>
             <div className={styles.movieImage}>
                 <img src={image}></img>
