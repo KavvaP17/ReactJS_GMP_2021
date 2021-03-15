@@ -4,6 +4,10 @@ import { createUseStyles } from 'react-jss';
 import { FilterBar } from '../../components/FilterBar';
 import { MoviesList } from '../../components/MoviesList';
 
+type Props = {
+    openModal: (type: string) => void
+}
+
 const useStyles = createUseStyles({
     mainWrapper: {
         backgroundColor: '#232323',
@@ -63,12 +67,12 @@ const mockMoviesList = [
 ];
 
 
-export const Home = (): JSX.Element => {
+export const Home = ({openModal}: Props): JSX.Element => {
     const styles = useStyles();
     return (
         <div className={styles.mainWrapper}>
             <FilterBar />
-            <MoviesList moviesList={mockMoviesList}/>
+            <MoviesList moviesList={mockMoviesList} openModal={openModal} />
         </div>
     )
 }

@@ -23,12 +23,6 @@
       "warn",
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
     ],
-    "no-console": [
-      "error",
-      {
-        "allow": ["warn", "error"]
-      }
-    ],
     "multiline-ternary": 0,
     "no-unused-vars": "off",
     "no-shadow": 0,
@@ -38,9 +32,9 @@
     "max-len": [
       "warn",
       {
-        "code": 80,
+        "code": 100,
         "tabWidth": 2,
-        "comments": 80,
+        "comments": 100,
         "ignoreComments": false,
         "ignoreTrailingComments": true,
         "ignoreUrls": true,

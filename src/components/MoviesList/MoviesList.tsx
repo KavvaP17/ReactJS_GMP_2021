@@ -9,7 +9,8 @@ export type Movie = {
     image: string
 }
 type Props = {
-    moviesList: Movie[]
+    moviesList: Movie[],
+    openModal: (type: string) => void
 }
 
 const useStyles = createUseStyles({
@@ -34,7 +35,7 @@ const useStyles = createUseStyles({
     }
 });
 
-export const MoviesList = ({ moviesList }: Props): JSX.Element => {
+export const MoviesList = ({ moviesList, openModal }: Props): JSX.Element => {
     const styles = useStyles();
     const moviesNumber = moviesList.length;
     return (
@@ -45,7 +46,7 @@ export const MoviesList = ({ moviesList }: Props): JSX.Element => {
             </div>
             <div className={styles.movieCards}>
                 {moviesList.map((movie, index) => (
-                    <MovieCard key={index} movie={movie} />
+                    <MovieCard key={index} movie={movie} openModal={openModal}/>
                 ))}
             </div>
         </div>

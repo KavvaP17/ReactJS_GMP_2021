@@ -21,7 +21,8 @@ const useStyles = createUseStyles({
     },
     searchInputWrapper: {
         flex: 4,
-        marginRight: 20
+        marginRight: 20,
+        fontSize: 24
     },
     searchBtnWrapper: {
         flex: 1,
@@ -32,6 +33,9 @@ const useStyles = createUseStyles({
 
 export const SearchBar = (): JSX.Element => {
     const styles = useStyles();
+    const search = (): void => {
+        console.log(search);
+    }
     return (
         <div className={styles.searchBarContainer}>
             <span className={styles.searchInputLabel}>
@@ -42,7 +46,7 @@ export const SearchBar = (): JSX.Element => {
                     <Input  type='search' placeholder='What do you want to watch?'/>
                 </div>
                 <div className={styles.searchBtnWrapper}>
-                    <Button title='Search' color='red'/>
+                    <Button title='Search' color='red' clickHandler={search}/>
                 </div>
             </div>
         </div>

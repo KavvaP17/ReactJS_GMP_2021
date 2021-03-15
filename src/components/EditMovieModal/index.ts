@@ -1,0 +1,1 @@
+export { EditMovieModal } from './EditMovieModal';

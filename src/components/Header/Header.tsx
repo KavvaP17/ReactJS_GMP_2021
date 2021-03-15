@@ -4,6 +4,11 @@ import { Logo } from '../Logo';
 import { Button } from '../Button';
 import { SearchBar } from '../SearchBar';
 
+type Props = {
+    logoIsVisible: boolean,
+    openModal: (type: string) => void
+};
+
 const useStyles = createUseStyles({
     headerContainer: {
         backgroundImage: 'url(https://www.atomcreativemedia.com/wp-content/uploads/2018/09/orange-and-blue-movies-2.jpg)',
@@ -20,13 +25,16 @@ const useStyles = createUseStyles({
     }
 });
 
-export const Header = (): JSX.Element => {
+export const Header = ({logoIsVisible, openModal}: Props): JSX.Element => {
     const styles = useStyles();
+    const openAddMovieModal = () => {
+        openModal('add');
+    }
     return (
         <div className={styles.headerContainer}>
             <div className={styles.topContainer}>
-                <Logo />
-                <Button title='+Add movie' color='transparent'/>
+                {logoIsVisible? <Logo />: ''}
+                <Button title='+Add movie' color='transparent' clickHandler={openAddMovieModal}/>
             </div>
             <SearchBar />
         </div>

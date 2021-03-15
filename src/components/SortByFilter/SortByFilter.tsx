@@ -1,22 +1,48 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
-import { Dropdown } from '../Dropdown';
+import { CustomizedSelect } from '../CustomizedSelect';
+// import { Dropdown } from '../Dropdown';
 
 const sortByOptions = [
     {
-        title: 'release date'
+        key: 'releaseDate',
+        value: 'release date',
     },
     {
-        title: 'most popular'
+        key: 'mostPopular',
+        value: 'most popular'
     }
 ]
 const useStyles = createUseStyles({
     sortByFilter: {
+        display: 'flex',
+        alignItems: 'center',
+
+        '& .MuiFormControl-root': {
+            minWidth: 200,
+
+            '& .MuiNativeSelect-root': {
+                backgroundColor: '#232323',
+                textTransform: 'uppercase',
+                borderRadius: '5px 5px 0 0',
+            },
+            '& .MuiNativeSelect-icon': {
+                right: 0
+            },
+            '& .MuiNativeSelect-select:focus': {
+                borderRadius: '5px 5px 0 0'
+            },
+            '& .MuiNativeSelect-select:hover': {
+                backgroundColor: '#555555',
+            }
+        },
+
     },
     filterLabel: {
         fontSize: 20,
         color: '#888888',
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
+        marginRight: 15
     }
 })
 
@@ -25,7 +51,7 @@ export const SortByFilter = (): JSX.Element => {
     return (
         <div className={styles.sortByFilter}>
             <span className={styles.filterLabel}>Sort by</span>
-            <Dropdown options={sortByOptions} />
+            <CustomizedSelect options={sortByOptions} placeholder='select sort type'/>
         </div>
     )
 }
