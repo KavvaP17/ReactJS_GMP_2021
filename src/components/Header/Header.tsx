@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { createUseStyles } from 'react-jss';
 import { Logo } from '../Logo';
 import { Button } from '../Button';
 import { SearchBar } from '../SearchBar';
+import { Modal } from '../Modal';
+import { AddMovieModal } from '../AddMovieModal';
 
 const useStyles = createUseStyles({
     headerContainer: {
@@ -22,13 +24,23 @@ const useStyles = createUseStyles({
 
 export const Header = (): JSX.Element => {
     const styles = useStyles();
+    const modal = useRef(null);
+
+    const openAddMovieModal = () => {
+        modal.current.open();
+    }
     return (
-        <div className={styles.headerContainer}>
-            <div className={styles.topContainer}>
-                <Logo />
-                <Button title='+Add movie' color='transparent'/>
+        <>
+            <div className={styles.headerContainer}>
+                <div className={styles.topContainer}>
+                    <Logo />
+                    <Button title='+Add movie' color='transparent' clickHandler={openAddMovieModal}/>
+                </div>
+                <SearchBar />
             </div>
-            <SearchBar />
-        </div>
+            <Modal ref={modal}>
+                <AddMovieModal />
+            </Modal>
+        </>
     )
 }

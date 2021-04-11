@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { Movie } from '../MoviesList/MoviesList';
 import { MovieContextMenu } from '../MovieContextMenu';
@@ -58,11 +58,29 @@ const useStyles = createUseStyles({
 
 export const MovieCard = ({ movie }: Props): JSX.Element => {
     const styles = useStyles();
+
+    const [
+        movieContexMenuIsVisible,
+        setContextMenuVisibility
+    ] = useState(false);
+
+    const openContextMenu = (): void => {
+        setContextMenuVisibility(true);
+    };
+
+    const closeContextMenu = (): void => {
+        setContextMenuVisibility(false);
+    }
+
     const {image, title, category, year} = movie;
     return (
-        <div className={styles.movieCard}>
+        <div className={styles.movieCard}
+            onMouseLeave={closeContextMenu}>
             <div className={`${styles.movieContextMenu} context-menu`}>
-                <MovieContextMenu />
+                <MovieContextMenu
+                    isVisible={movieContexMenuIsVisible}
+                    onOpen={openContextMenu}
+                    onClose={closeContextMenu}/>
             </div>
             <div className={styles.movieImage}>
                 <img src={image}></img>

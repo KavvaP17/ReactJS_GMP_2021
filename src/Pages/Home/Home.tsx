@@ -68,7 +68,7 @@ export const Home = (): JSX.Element => {
     return (
         <div className={styles.mainWrapper}>
             <FilterBar />
-            <MoviesList moviesList={mockMoviesList}/>
+            <MoviesList moviesList={mockMoviesList} />
         </div>
     )
 }

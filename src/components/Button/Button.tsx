@@ -3,7 +3,8 @@ import { createUseStyles } from 'react-jss';
 
 type Props = {
     title: string,
-    color: 'red' | 'transparent'
+    color: 'red' | 'transparent' | 'redText',
+    clickHandler: () => void
 };
 
 const useStyles = createUseStyles({
@@ -23,12 +24,19 @@ const useStyles = createUseStyles({
     transparent: {
         backgroundColor: 'rgba(85, 85, 85, 0.8)',
         color: '#f65261'
+    },
+    redText: {
+        color: '#f65261',
+        backgroundColor: 'inherit',
+        border: '1px solid #f65261',
+        boxSizing: 'border-box',
+        width: '100%'
     }
 });
 
-export const Button = ({ title, color }: Props): JSX.Element => {
+export const Button = ({ title, color, clickHandler}: Props): JSX.Element => {
     const styles = useStyles();
     return (
-        <button className={`${styles.button} ${styles[color]}`}>{title}</button>
+        <button className={`${styles.button} ${styles[color]}`} onClick={clickHandler}>{title}</button>
     )
 }
