@@ -6,7 +6,10 @@ export type Movie = {
     year: string,
     title: string,
     category: string,
-    image: string
+    image: string,
+    description: string,
+    rating: number,
+    duration: number
 }
 type Props = {
     moviesList: Movie[]

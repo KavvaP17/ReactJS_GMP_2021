@@ -2,7 +2,7 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 
 import { FilterBar } from '../../components/FilterBar';
-import { Header } from '../../components/Header';
+import { MovieDetailsHeader } from '../../components/MovieDetailsHeader';
 import { MoviesList } from '../../components/MoviesList';
 import { Movie } from '../../components/MoviesList/MoviesList';
 
@@ -17,11 +17,11 @@ const useStyles = createUseStyles({
     }
 });
 
-export const Home = ({ mockMoviesList }: Props): JSX.Element => {
+export const MovieDetails = ({ mockMoviesList }: Props): JSX.Element => {
     const styles = useStyles();
     return (
         <>
-            <Header />
+            <MovieDetailsHeader movie={mockMoviesList[0]}/>
             <div className={styles.mainWrapper}>
                 <FilterBar />
                 <MoviesList moviesList={mockMoviesList} />
