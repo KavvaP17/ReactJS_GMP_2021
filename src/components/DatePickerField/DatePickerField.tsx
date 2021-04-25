@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { createUseStyles } from 'react-jss';
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
+import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 
 type Props = {
     date?: Date,
+    changeHandler: (date: MaterialUiPickersDate) => void
 };
 
 const useStyles = createUseStyles({
@@ -39,27 +41,16 @@ const useStyles = createUseStyles({
     }
 });
 
-export const DatePickerField = ({date}: Props): JSX.Element => {
+export const DatePickerField = ({date, changeHandler}: Props): JSX.Element => {
     const styles = useStyles();
-    const [selectedDate, setSelectedDate] = useState<Date | null>(
-        new Date()
-    );
-
-    if (date) {
-        setSelectedDate(date);
-    }
-
-    const handleDateChange = (date: Date | null) => {
-        setSelectedDate(date);
-    };
 
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
                 id="date-picker-dialog"
                 format="MM/dd/yyyy"
-                value={selectedDate}
-                onChange={handleDateChange}
+                value={date}
+                onChange={changeHandler}
                 KeyboardButtonProps={{
                     'aria-label': 'change date',
                 }}

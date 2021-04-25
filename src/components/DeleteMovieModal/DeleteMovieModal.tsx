@@ -2,6 +2,12 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { Button } from '../Button';
 
+type Props = {
+    movieId: string;
+    onClose: () => void;
+    deleteMovie: (movieId: string) => Promise<void>;
+}
+
 const useStyles = createUseStyles({
     header: {
         fontSize: 35,
@@ -25,8 +31,12 @@ const useStyles = createUseStyles({
     }
 });
 
-export const DeleteMovieModal = (): JSX.Element => {
+export const DeleteMovieModal = ({movieId, onClose, deleteMovie}: Props): JSX.Element => {
     const styles = useStyles();
+    const deleteItem = (): void => {
+        deleteMovie(movieId);
+        onClose();
+    }
     return (
         <>
             <h2 className={styles.header}>delete movie</h2>
@@ -35,7 +45,7 @@ export const DeleteMovieModal = (): JSX.Element => {
             </p>
             <div className={styles.actionContainer}>
                 <div className={styles.confirmBtn}>
-                    <Button color='red' title='confirm' clickHandler={()=>{console.log('delete')}}></Button>
+                    <Button color='red' title='confirm' clickHandler={deleteItem}></Button>
                 </div>
             </div>
         </>

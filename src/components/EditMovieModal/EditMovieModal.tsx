@@ -4,6 +4,7 @@ import { Input } from '../Input';
 import { DatePickerField } from '../DatePickerField';
 import { CustomizedSelect } from '../CustomizedSelect';
 import { Button } from '../Button';
+import { IMovie } from '../../interfaces';
 
 const genreOptions = [
     {
@@ -58,50 +59,90 @@ const useStyles = createUseStyles({
     }
 });
 
-const mockData = {
-    movieId : 'movie id',
-    title: 'title',
-    releaseDate: new Date(),
-    movieUrl: 'movie url',
-    genre: 'Documentary',
-    overview: 'overview',
-    runtime: 'runtime',
+type Props = {
+    movie: IMovie,
+    editMovie: (movie: IMovie) => Promise<void>,
+    onClose: () => void,
 }
 
-export const EditMovieModal = (): JSX.Element => {
+export const EditMovieModal = ({movie, editMovie, onClose}: Props): JSX.Element => {
     const styles = useStyles();
-    const [movieDate, setMovieData] = useState(mockData);
+    // temporary solution, need to use Formik in future
+    const [title, setTitle] = useState(movie.title);
+    const [posterPath, setPosterPath] = useState(movie.poster_path);
+    const [overview, setOverview] = useState(movie.overview);
+    const [runtime, setRuntime] = useState(movie.runtime);
+    const [genres, setGenres] = useState<string[]>(movie.genres);
+    const [releaseDate, setReleaseDate] = useState(movie.release_date);
+
+    const submit = () => {
+        const editedMovie: IMovie = {
+            id: movie.id,
+            title,
+            poster_path: posterPath,
+            overview,
+            runtime: runtime,
+            genres,
+            release_date: releaseDate,
+        }
+        editMovie(editedMovie);
+        onClose();
+    }
 
     const reset = () => {
-        setMovieData(mockData);
-    }
-    const save = () => {
-        setMovieData(mockData);
+        setTitle(movie.title);
+        setPosterPath(movie.poster_path);
+        setOverview(movie.overview);
+        setRuntime(movie.runtime);
+        setGenres(movie.genres);
+        setReleaseDate(movie.release_date);
     }
 
     return (
         <>
             <h2 className={styles.header}>edit movie</h2>
             <p className={styles.lable}>movie id</p>
-            <p className={styles.movieId}>{movieDate.movieId}</p>
+            <p className={styles.movieId}>{movie.id}</p>
             <p className={styles.lable}>title</p>
-            <Input type='default' value={movieDate.title} />
+            <Input
+                type='default'
+                placeholder="Movie title here"
+                value={title}
+                changeHandler={e => setTitle(e.target.value)} />
             <p className={styles.lable}>release date</p>
-            <DatePickerField />
+            <DatePickerField
+                date={releaseDate}
+                changeHandler={date => setReleaseDate(new Date(date ? date.toDateString(): ''))}/>
             <p className={styles.lable}>movie url</p>
-            <Input type='default' value={movieDate.movieUrl} />
+            <Input
+                type='default'
+                placeholder="Movie url here"
+                value={posterPath}
+                changeHandler={e => setPosterPath(e.target.value)} />
             <p className={styles.lable}>genre</p>
-            <CustomizedSelect options={genreOptions} placeholder='Select Genre' />
+            <CustomizedSelect
+                placeholder='Select Genre'
+                options={genreOptions}
+                selectedValue={genres[0]}
+                changeHandler={genres => setGenres(genres)}/>
             <p className={styles.lable}>overview</p>
-            <Input type='default' value={movieDate.overview} />
+            <Input
+                type='default'
+                placeholder="Overview here"
+                value={overview}
+                changeHandler={e => setOverview(e.target.value)} />
             <p className={styles.lable}>runtime</p>
-            <Input type='default' value={movieDate.runtime} />
+            <Input
+                type='default'
+                placeholder="Runtime here"
+                value={runtime.toString()}
+                changeHandler={e => setRuntime(+e.target.value)}/>
             <div className={styles.buttonsContainer}>
                 <div className={styles.resetBtn}>
                     <Button title='reset' color='redText' clickHandler={reset}/>
                 </div>
                 <div className={styles.saveBtn}>
-                    <Button title='save' color='red' clickHandler={save}/>
+                    <Button title='save' color='red' clickHandler={submit}/>
                 </div>
             </div>
         </>

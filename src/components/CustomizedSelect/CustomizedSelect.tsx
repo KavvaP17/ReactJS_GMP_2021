@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { createStyles, makeStyles, withStyles, Theme } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
@@ -12,7 +12,8 @@ type Option = {
 type Props = {
     options: Option[],
     placeholder?: string,
-    selectedValue?: string
+    selectedValue?: string,
+    changeHandler: (values: string[]) => void
 }
 
 const BootstrapInput = withStyles((theme: Theme) =>
@@ -59,21 +60,18 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const CustomizedSelect = ({ options, placeholder, selectedValue }: Props): JSX.Element => {
+export const CustomizedSelect = ({ options, placeholder, selectedValue, changeHandler }: Props): JSX.Element => {
     const styles = useStyles();
-    const [value, setValue] = useState<string>('');
-    if (selectedValue) {
-        setValue(selectedValue);
-    }
-    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        setValue(event.target.value as string);
+
+    const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
+        changeHandler([event.target.value as string]);
     };
 
     return (
         <div>
             <FormControl className={styles.formControl}>
                 <NativeSelect
-                    value={value}
+                    value={selectedValue}
                     onChange={handleChange}
                     input={<BootstrapInput/>}
                 >
@@ -81,7 +79,7 @@ export const CustomizedSelect = ({ options, placeholder, selectedValue }: Props)
                         {placeholder}
                     </option>
                     {options.map((option) => (
-                        <option key={option.key} value={option.key}>
+                        <option key={option.key} value={option.value}>
                             {option.value}
                         </option>
                     ))}

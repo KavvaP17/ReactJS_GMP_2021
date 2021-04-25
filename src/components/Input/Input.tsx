@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { createUseStyles } from 'react-jss';
 
 type Props = {
     type: 'search' | 'default'
     placeholder?: string,
     value?: string
+    changeHandler?: (event: React.ChangeEvent<{ value: string }>) => void
 };
 
 const useStyles = createUseStyles({
@@ -26,17 +27,12 @@ const useStyles = createUseStyles({
     }
 });
 
-export const Input = ({ type, placeholder, value }: Props): JSX.Element => {
+export const Input = ({ type, placeholder, value, changeHandler }: Props): JSX.Element => {
     const styles = useStyles();
-    const [inputValue, setInputValue] = useState(value);
-
-    const handleInputValueChange = (event: React.ChangeEvent<{ value: string }>) => {
-        setInputValue(event.target.value as string);
-    };
 
     return (
         <input className={`${styles.input} ${styles[type]}`} placeholder={placeholder}
-            value={inputValue}
-            onChange={handleInputValueChange}/>
+            value={value}
+            onChange={changeHandler}/>
     )
 }

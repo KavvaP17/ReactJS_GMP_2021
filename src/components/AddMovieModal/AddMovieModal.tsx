@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
+import { IMovie } from '../../interfaces';
 import { Button } from '../Button';
 import { CustomizedSelect } from '../CustomizedSelect';
 import { DatePickerField } from '../DatePickerField';
@@ -55,31 +56,89 @@ const useStyles = createUseStyles({
     }
 });
 
-export const AddMovieModal = (): JSX.Element => {
+type Props = {
+    addMovie: (movie: IMovie) => Promise<void>,
+    closeModal: () => void
+};
+
+const defaultFormData = {
+    title: '',
+    poster_path: '',
+    overview: '',
+    runtime: '',
+    genres: [],
+    release_date: new Date(),
+  };
+
+export const AddMovieModal = ({ addMovie, closeModal }: Props): JSX.Element => {
     const styles = useStyles();
+    // temporary solution, need to use Formik in future
+    const [title, setTitle] = useState(defaultFormData.title);
+    const [posterPath, setPosterPath] = useState(defaultFormData.poster_path);
+    const [overview, setOverview] = useState(defaultFormData.overview);
+    const [runtime, setRuntime] = useState(defaultFormData.runtime);
+    const [genres, setGenres] = useState<string[]>(defaultFormData.genres);
+    const [releaseDate, setReleaseDate] = useState(defaultFormData.release_date);
+
 
     const reset = () => {
-        console.log('reset');
+        setTitle(defaultFormData.title);
+        setPosterPath(defaultFormData.poster_path);
+        setOverview(defaultFormData.overview);
+        setRuntime(defaultFormData.runtime);
+        setGenres(defaultFormData.genres);
+        setReleaseDate(defaultFormData.release_date);
     }
     const submit = () => {
-        console.log('submit');
+        const movie: IMovie = {
+            title,
+            poster_path: posterPath,
+            overview,
+            runtime: parseInt(runtime, 10),
+            genres,
+            release_date: releaseDate,
+        }
+        addMovie(movie);
+        closeModal();
     }
 
     return (
         <>
             <h2 className={styles.header}>add movie</h2>
             <p className={styles.lable}>title</p>
-            <Input type='default' placeholder="Movie title here" />
+            <Input
+                type='default'
+                placeholder="Movie title here"
+                value={title}
+                changeHandler={e => setTitle(e.target.value)} />
             <p className={styles.lable}>release date</p>
-            <DatePickerField />
+            <DatePickerField
+                date={releaseDate}
+                changeHandler={date => setReleaseDate(new Date(date ? date.toDateString(): ''))}/>
             <p className={styles.lable}>movie url</p>
-            <Input type='default' placeholder="Movie url here" />
+            <Input
+                type='default'
+                placeholder="Movie url here"
+                value={posterPath}
+                changeHandler={e => setPosterPath(e.target.value)} />
             <p className={styles.lable}>genre</p>
-            <CustomizedSelect placeholder='Select Genre' options={genreOptions}/>
+            <CustomizedSelect
+                placeholder='Select Genre'
+                options={genreOptions}
+                selectedValue={genres[0]}
+                changeHandler={genres => setGenres(genres)}/>
             <p className={styles.lable}>overview</p>
-            <Input type='default' placeholder="Overview here" />
+            <Input
+                type='default'
+                placeholder="Overview here"
+                value={overview}
+                changeHandler={e => setOverview(e.target.value)} />
             <p className={styles.lable}>runtime</p>
-            <Input type='default' placeholder="Runtime here" />
+            <Input
+                type='default'
+                placeholder="Runtime here"
+                value={runtime}
+                changeHandler={e => setRuntime(e.target.value)}/>
             <div className={styles.buttonsContainer}>
                 <div className={styles.resetBtn}>
                     <Button title='reset' color='redText' clickHandler={reset}/>

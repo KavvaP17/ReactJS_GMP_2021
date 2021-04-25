@@ -1,18 +1,9 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { CustomizedSelect } from '../CustomizedSelect';
-// import { Dropdown } from '../Dropdown';
+import { sortByOptions } from '../../config';
+import { ISort } from '../../interfaces';
 
-const sortByOptions = [
-    {
-        key: 'releaseDate',
-        value: 'release date',
-    },
-    {
-        key: 'mostPopular',
-        value: 'most popular'
-    }
-]
 const useStyles = createUseStyles({
     sortByFilter: {
         display: 'flex',
@@ -44,14 +35,40 @@ const useStyles = createUseStyles({
         textTransform: 'uppercase',
         marginRight: 15
     }
-})
+});
 
-export const SortByFilter = (): JSX.Element => {
+type Props = {
+    selectedValue: ISort;
+    sortMovies: (sort: ISort) => void;
+};
+
+export const SortByFilter = ({selectedValue, sortMovies}: Props): JSX.Element => {
     const styles = useStyles();
+
+    // TODO: need to fix CustomizedSelect component!!!
+    const changeSortHandler  = (sortValue: string[]) => {
+        const selectedSortValue = sortValue[0];
+        const selectedOption = sortByOptions.find(option =>
+            option.value.toLocaleLowerCase() === selectedSortValue.toLocaleLowerCase());
+        if (selectedOption) {
+            sortMovies(selectedOption.key as ISort);
+        }
+    }
+
+    const getSortingValuebyKey = (key: string) => {
+        const selectedOption = sortByOptions.find(option =>
+            option.key.toLocaleLowerCase() === key.toLocaleLowerCase());
+        return selectedOption?.value;
+    };
+
     return (
         <div className={styles.sortByFilter}>
             <span className={styles.filterLabel}>Sort by</span>
-            <CustomizedSelect options={sortByOptions} placeholder='select sort type'/>
+            <CustomizedSelect
+                options={sortByOptions}
+                placeholder='select sort type'
+                selectedValue={getSortingValuebyKey(selectedValue)}
+                changeHandler={sortValue => changeSortHandler(sortValue)}/>
         </div>
     )
 }
