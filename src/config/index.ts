@@ -32,6 +32,24 @@ export const sortByOptions = [
         key: 'mostPopular',
         value: 'most popular'
     }
-]
+];
 
+export const genreOptions = [
+    {
+        key: '1',
+        value: 'Documentary'
+    },
+    {
+        key: '2',
+        value: 'Comedy'
+    },
+    {
+        key: '3',
+        value: 'Horror'
+    },
+    {
+        key: '4',
+        value: 'Crime'
+    },
+];
 

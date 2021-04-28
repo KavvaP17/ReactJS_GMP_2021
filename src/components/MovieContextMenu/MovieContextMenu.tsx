@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 type Props = {
     isVisible: boolean,
     movie: IMovie,
-    deleteMovie: (movieId: string) => Promise<void>,
+    deleteMovie: (movieId: number | undefined) => Promise<void>,
     editMovie: () => Promise<void>,
     onOpen: () => void,
     onClose: () => void,
@@ -99,19 +99,21 @@ export const MovieContextMenuElement = ({
 
     const openModal = (item: ContextMenyOption): void => {
         setSelectedItem(item);
-        modal.current.open();
+        const modalOpenHandler = get(modal, 'current.open');
+        modalOpenHandler && modalOpenHandler();
     }
 
     const closeModal = (): void => {
-        modal.current.close();
+        const modalCloseHandler = get(modal, 'current.close');
+        modalCloseHandler && modalCloseHandler();
     }
 
     const getModalContent = (): JSX.Element => {
         switch (get(selectedItem, 'key')) {
             case 'delete':
-                return <DeleteMovieModal movieId={movie.id} onClose={closeModal} deleteMovie={deleteMovie}/>;
+                return <DeleteMovieModal movieId={movie.id} closeModal={closeModal} deleteMovie={deleteMovie}/>;
             case 'edit':
-                return <EditMovieModal movie={movie} onClose={closeModal} editMovie={editMovie}/>;
+                return <EditMovieModal movie={movie} closeModal={closeModal} editMovie={editMovie}/>;
             default:
                 return <></>
         }

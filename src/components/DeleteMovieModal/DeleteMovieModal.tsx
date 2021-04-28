@@ -3,9 +3,9 @@ import { createUseStyles } from 'react-jss';
 import { Button } from '../Button';
 
 type Props = {
-    movieId: string;
-    onClose: () => void;
-    deleteMovie: (movieId: string) => Promise<void>;
+    movieId: number | undefined;
+    closeModal: () => void;
+    deleteMovie: (movieId: number | undefined) => Promise<void>;
 }
 
 const useStyles = createUseStyles({
@@ -31,11 +31,11 @@ const useStyles = createUseStyles({
     }
 });
 
-export const DeleteMovieModal = ({movieId, onClose, deleteMovie}: Props): JSX.Element => {
+export const DeleteMovieModal = ({movieId, closeModal, deleteMovie}: Props): JSX.Element => {
     const styles = useStyles();
     const deleteItem = (): void => {
         deleteMovie(movieId);
-        onClose();
+        closeModal();
     }
     return (
         <>

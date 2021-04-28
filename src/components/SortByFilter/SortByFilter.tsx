@@ -45,11 +45,9 @@ type Props = {
 export const SortByFilter = ({selectedValue, sortMovies}: Props): JSX.Element => {
     const styles = useStyles();
 
-    // TODO: need to fix CustomizedSelect component!!!
-    const changeSortHandler  = (sortValue: string[]) => {
-        const selectedSortValue = sortValue[0];
+    const changeSortHandler  = (sortValue: string) => {
         const selectedOption = sortByOptions.find(option =>
-            option.value.toLocaleLowerCase() === selectedSortValue.toLocaleLowerCase());
+            option.value.toLocaleLowerCase() === sortValue.toLocaleLowerCase());
         if (selectedOption) {
             sortMovies(selectedOption.key as ISort);
         }

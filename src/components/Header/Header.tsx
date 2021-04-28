@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import {
     addMovie,
 } from '../../actions/movies';
+import { get } from 'lodash';
 
 const useStyles = createUseStyles({
     headerContainer: {
@@ -35,11 +36,13 @@ export const HeaderElement = ({ addMovie }: Props): JSX.Element => {
     const modal = useRef(null);
 
     const openModal = () => {
-        modal && modal.current.open();
+        const modalOpenHandler = get(modal, 'current.open');
+        modalOpenHandler && modalOpenHandler();
     }
 
     const closeModal = () => {
-        modal && modal.current.close();
+        const modalCloseHandler = get(modal, 'current.close');
+        modalCloseHandler && modalCloseHandler();
     }
     return (
         <>

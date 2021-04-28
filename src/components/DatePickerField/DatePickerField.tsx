@@ -8,6 +8,7 @@ import {
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 
 type Props = {
+    name: string,
     date?: Date,
     changeHandler: (date: MaterialUiPickersDate) => void
 };
@@ -41,12 +42,13 @@ const useStyles = createUseStyles({
     }
 });
 
-export const DatePickerField = ({date, changeHandler}: Props): JSX.Element => {
+export const DatePickerField = ({name, date, changeHandler}: Props): JSX.Element => {
     const styles = useStyles();
 
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
+                name={name}
                 id="date-picker-dialog"
                 format="MM/dd/yyyy"
                 value={date}

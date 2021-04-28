@@ -2,9 +2,10 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 
 type Props = {
-    type: 'search' | 'default'
+    name: string,
+    type: 'search' | 'default',
     placeholder?: string,
-    value?: string
+    value?: string | number,
     changeHandler?: (event: React.ChangeEvent<{ value: string }>) => void
 };
 
@@ -27,11 +28,13 @@ const useStyles = createUseStyles({
     }
 });
 
-export const Input = ({ type, placeholder, value, changeHandler }: Props): JSX.Element => {
+export const Input = ({ name, type, placeholder, value, changeHandler }: Props): JSX.Element => {
     const styles = useStyles();
 
     return (
-        <input className={`${styles.input} ${styles[type]}`} placeholder={placeholder}
+        <input name={name}
+            className={`${styles.input} ${styles[type]}`}
+            placeholder={placeholder}
             value={value}
             onChange={changeHandler}/>
     )

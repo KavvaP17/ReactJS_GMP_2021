@@ -13,7 +13,7 @@ type Props = {
     options: Option[],
     placeholder?: string,
     selectedValue?: string,
-    changeHandler: (values: string[]) => void
+    changeHandler: (value: string) => void
 }
 
 const BootstrapInput = withStyles((theme: Theme) =>
@@ -64,7 +64,7 @@ export const CustomizedSelect = ({ options, placeholder, selectedValue, changeHa
     const styles = useStyles();
 
     const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
-        changeHandler([event.target.value as string]);
+        changeHandler(event.target.value as string);
     };
 
     return (
