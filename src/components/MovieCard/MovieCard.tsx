@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { Movie } from '../MoviesList/MoviesList';
+import { IMovie } from '../../interfaces';
 import { MovieContextMenu } from '../MovieContextMenu';
 
 type Props = {
-    movie: Movie
+    movie: IMovie
 }
 
 const useStyles = createUseStyles({
@@ -72,7 +72,7 @@ export const MovieCard = ({ movie }: Props): JSX.Element => {
         setContextMenuVisibility(false);
     }
 
-    const {image, title, category, year} = movie;
+    const {poster_path, title, genres, release_date} = movie;
     return (
         <div className={styles.movieCard}
             onMouseLeave={closeContextMenu}>
@@ -80,17 +80,18 @@ export const MovieCard = ({ movie }: Props): JSX.Element => {
                 <MovieContextMenu
                     isVisible={movieContexMenuIsVisible}
                     onOpen={openContextMenu}
-                    onClose={closeContextMenu}/>
+                    onClose={closeContextMenu}
+                    movie={movie}/>
             </div>
             <div className={styles.movieImage}>
-                <img src={image}></img>
+                <img src={poster_path}></img>
             </div>
             <div className={styles.movieDescription}>
                 <div>
                     <div className='title'>{title}</div>
-                    <div className='category'>{category}</div>
+                    <div className='category'>{genres.join(', ')}</div>
                 </div>
-                <div className={styles.movieReleaseDate}>{year}</div>
+                <div className={styles.movieReleaseDate}>{release_date}</div>
             </div>
         </div>
     )

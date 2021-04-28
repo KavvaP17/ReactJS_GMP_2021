@@ -1,18 +1,10 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
+import { IMovie } from '../../interfaces';
 import { MovieCard } from '../MovieCard';
 
-export type Movie = {
-    year: string,
-    title: string,
-    category: string,
-    image: string,
-    description: string,
-    rating: number,
-    duration: number
-}
 type Props = {
-    moviesList: Movie[]
+    moviesList: IMovie[]
 }
 
 const useStyles = createUseStyles({
@@ -39,6 +31,9 @@ const useStyles = createUseStyles({
 
 export const MoviesList = ({ moviesList }: Props): JSX.Element => {
     const styles = useStyles();
+    if (!moviesList) {
+        moviesList = [];
+    }
     const moviesNumber = moviesList.length;
     return (
         <div className={styles.moviesList}>
@@ -47,8 +42,8 @@ export const MoviesList = ({ moviesList }: Props): JSX.Element => {
                 <span>{` movie${moviesNumber > 1 ? 's' : ''} found`}</span>
             </div>
             <div className={styles.movieCards}>
-                {moviesList.map((movie, index) => (
-                    <MovieCard key={index} movie={movie} />
+                {moviesList.map((movie) => (
+                    <MovieCard key={movie.id} movie={movie} />
                 ))}
             </div>
         </div>

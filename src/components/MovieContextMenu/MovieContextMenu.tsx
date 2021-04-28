@@ -5,29 +5,36 @@ import CloseIcon from '@material-ui/icons/Close';
 import { Modal } from '../Modal';
 import { EditMovieModal } from '../EditMovieModal';
 import { DeleteMovieModal } from '../DeleteMovieModal';
+import { IMovie } from '../../interfaces';
+import {
+    deleteMovie,
+    editMovie
+} from '../../actions/movies';
+import { get } from 'lodash';
+import { connect } from 'react-redux';
 
 type Props = {
     isVisible: boolean,
+    movie: IMovie,
+    deleteMovie: (movieId: number | undefined) => Promise<void>,
+    editMovie: () => Promise<void>,
     onOpen: () => void,
     onClose: () => void,
 }
 
 type ContextMenyOption = {
     title: string,
-    key: string,
-    content: JSX.Element
+    key: string
 }
 
 const contextMenuOptions: ContextMenyOption[] = [
     {
         title: 'Edit',
-        key: 'edit',
-        content: <EditMovieModal />
+        key: 'edit'
     },
     {
         title: 'Delete',
-        key: 'delete',
-        content: <DeleteMovieModal />
+        key: 'delete'
     }
 ];
 
@@ -75,7 +82,14 @@ const useStyles = createUseStyles({
     }
 });
 
-export const MovieContextMenu = ({isVisible, onOpen, onClose}: Props): JSX.Element => {
+export const MovieContextMenuElement = ({
+    isVisible,
+    movie,
+    onOpen,
+    onClose,
+    deleteMovie,
+    editMovie
+}: Props): JSX.Element => {
     const styles = useStyles();
     const modal = useRef(null);
     const [
@@ -85,7 +99,24 @@ export const MovieContextMenu = ({isVisible, onOpen, onClose}: Props): JSX.Eleme
 
     const openModal = (item: ContextMenyOption): void => {
         setSelectedItem(item);
-        modal.current.open();
+        const modalOpenHandler = get(modal, 'current.open');
+        modalOpenHandler && modalOpenHandler();
+    }
+
+    const closeModal = (): void => {
+        const modalCloseHandler = get(modal, 'current.close');
+        modalCloseHandler && modalCloseHandler();
+    }
+
+    const getModalContent = (): JSX.Element => {
+        switch (get(selectedItem, 'key')) {
+            case 'delete':
+                return <DeleteMovieModal movieId={movie.id} closeModal={closeModal} deleteMovie={deleteMovie}/>;
+            case 'edit':
+                return <EditMovieModal movie={movie} closeModal={closeModal} editMovie={editMovie}/>;
+            default:
+                return <></>
+        }
     }
 
     return (
@@ -109,8 +140,15 @@ export const MovieContextMenu = ({isVisible, onOpen, onClose}: Props): JSX.Eleme
                 </ul>
             </div>
             <Modal ref={modal}>
-                {selectedItem ? selectedItem.content : <></>}
+                {getModalContent()}
             </Modal>
         </>
     )
 }
+
+const mapDispatchToProps = {
+    deleteMovie,
+    editMovie
+}
+
+export const MovieContextMenu = connect(null, mapDispatchToProps)(MovieContextMenuElement);
