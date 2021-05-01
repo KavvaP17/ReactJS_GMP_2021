@@ -13,7 +13,11 @@ import {
     MOVIE_ADD_SUCCESS,
     MOVIE_ADD_FAILURE,
     FILTER_MOVIES,
-    SORT_MOVIES
+    SORT_MOVIES,
+    MOVIES_SEARCH_STARTED,
+    MOVIES_SEARCH_SUCCESS,
+    MOVIES_SEARCH_FAILURE,
+    SET_SEARCH_QUERY
 } from '../action-types';
 import { IAction, IMovieState } from '../interfaces';
 
@@ -22,7 +26,8 @@ const initialState: IMovieState = {
     loading: false,
     error: null,
     filter: 'all',
-    sort: 'releaseDate'
+    sort: 'releaseDate',
+    query: ''
 };
 
 export const moviesReducer = (state = initialState, action: IAction): IMovieState => {
@@ -46,6 +51,33 @@ export const moviesReducer = (state = initialState, action: IAction): IMovieStat
                 ...state,
                 loading: false,
                 error: action.payload.error
+            };
+
+        // search movies
+        case MOVIES_SEARCH_STARTED:
+            return {
+                ...state,
+                loading: true
+            };
+        case MOVIES_SEARCH_SUCCESS:
+            return {
+                ...state,
+                movies: action.payload.data,
+                loading: false,
+                error: null
+            };
+        case MOVIES_SEARCH_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload.error
+            };
+
+        // set search query
+        case SET_SEARCH_QUERY:
+            return {
+                ...state,
+                query: action.payload
             };
 
         // delete movie

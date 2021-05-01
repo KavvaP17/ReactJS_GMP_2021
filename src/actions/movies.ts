@@ -13,7 +13,11 @@ import {
     MOVIE_ADD_SUCCESS,
     MOVIE_ADD_FAILURE,
     SORT_MOVIES,
-    FILTER_MOVIES
+    FILTER_MOVIES,
+    MOVIES_SEARCH_STARTED,
+    MOVIES_SEARCH_SUCCESS,
+    MOVIES_SEARCH_FAILURE,
+    SET_SEARCH_QUERY
 } from '../action-types';
 
 import {
@@ -40,6 +44,37 @@ export const loadMovies = () => {
         }
     };
 };
+
+export const searchMovies = (query: string) => {
+    return async (dispatch: Dispatch<Action>): Promise<void> => {
+        dispatch({ type: MOVIES_SEARCH_STARTED });
+        try {
+            const response = await fetch(`${API_URL}/movies?search=${query}&searchBy=title`);
+            const movies = await response.json();
+            console.log(movies);
+
+            dispatch({
+                type: MOVIES_SEARCH_SUCCESS,
+                payload: movies
+            });
+        } catch (err) {
+            dispatch({
+                type: MOVIES_SEARCH_FAILURE,
+                payload: err
+            });
+        }
+    };
+};
+
+
+export const setQuery = (query: string) => {
+    return (dispatch: Dispatch<Action>): void => {
+        dispatch({
+            type: SET_SEARCH_QUERY,
+            payload: query
+        });
+    };
+}
 
 export const deleteMovie = (movieId: string) => {
     return async (dispatch: Dispatch<Action>): Promise<void> => {

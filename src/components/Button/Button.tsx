@@ -5,7 +5,7 @@ type Props = {
     title: string,
     color: 'red' | 'transparent' | 'redText',
     type?: 'button' | 'submit' | 'reset' | undefined
-    clickHandler: () => void
+    clickHandler?: () => void
 };
 
 const useStyles = createUseStyles({

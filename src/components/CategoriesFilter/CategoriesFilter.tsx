@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { IFilter } from '../../interfaces';
 import { categories } from '../../config';
 
 type Props = {
+    filter: string;
     filterMovies: (filter: IFilter) => void;
 };
 
@@ -35,9 +36,13 @@ const useStyles = createUseStyles({
     }
 })
 
-export const CategoriesFilter = ({filterMovies}: Props): JSX.Element => {
+export const CategoriesFilter = ({filterMovies, filter}: Props): JSX.Element => {
     const styles = useStyles();
     const [activeCategorie, setActiveCategorie] = useState(categories[0]);
+
+    useEffect(() => {
+        setActiveCategorie(categories.find(category => category.id === filter) || categories[0]);
+    }, [filter])
 
     const categorieClickHandler = (category: Category) => {
         filterMovies(category.id);

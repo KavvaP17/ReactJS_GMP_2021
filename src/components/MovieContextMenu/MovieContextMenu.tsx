@@ -97,6 +97,11 @@ export const MovieContextMenuElement = ({
         setSelectedItem
     ] = useState<ContextMenyOption | null>(null);
 
+    const openContextMenu = (event: MouseEvent) => {
+        event.preventDefault();
+        onOpen();
+    }
+
     const openModal = (item: ContextMenyOption): void => {
         setSelectedItem(item);
         const modalOpenHandler = get(modal, 'current.open');
@@ -122,7 +127,7 @@ export const MovieContextMenuElement = ({
     return (
         <>
             <div className={`${styles.contextMenuBtn} ${isVisible ? styles.hide : styles.show}`}
-                onClick={onOpen}>
+                onClick={openContextMenu}>
                 <MoreVertIcon />
             </div>
             <div className={`${isVisible ? styles.show : styles.hide} ${styles.contextMenuConteiner}`}>
@@ -132,7 +137,7 @@ export const MovieContextMenuElement = ({
                 <ul className={styles.contextMenuItems}>
                     {contextMenuOptions.map((option) => (
                         <li key={option.key}
-                            onClick={()=>{openModal(option)}}
+                            onClick={(event: MouseEvent)=>{ event.preventDefault(); openModal(option)}}
                             className={styles.menuItem}>
                             {option.title}
                         </li>

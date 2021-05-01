@@ -10,6 +10,7 @@ import {
     addMovie,
 } from '../../actions/movies';
 import { get } from 'lodash';
+import { Link } from 'react-router-dom';
 
 const useStyles = createUseStyles({
     headerContainer: {
@@ -24,6 +25,9 @@ const useStyles = createUseStyles({
         display: 'flex',
         justifyContent: 'space-between'
 
+    },
+    logoContainer : {
+        textDecoration : 'none'
     }
 });
 
@@ -48,7 +52,9 @@ export const HeaderElement = ({ addMovie }: Props): JSX.Element => {
         <>
             <div className={styles.headerContainer}>
                 <div className={styles.topContainer}>
-                    <Logo />
+                    <Link className={styles.logoContainer} to={'/'}>
+                        <Logo />
+                    </Link>
                     <Button title='+Add movie' color='transparent' clickHandler={openModal}/>
                 </div>
                 <SearchBar />

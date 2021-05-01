@@ -21,15 +21,16 @@ const useStyles = createUseStyles({
 
 type Props = {
     sort: ISort,
+    filter: IFilter,
     filterMovies: (filter: IFilter) => void;
     sortMovies: (sort: ISort) => void;
 };
 
-export const FilterBarElement = ({sort, filterMovies, sortMovies}: Props): JSX.Element => {
+export const FilterBarElement = ({sort, filter, filterMovies, sortMovies}: Props): JSX.Element => {
     const styles = useStyles();
     return (
         <div className={styles.filterBar}>
-            <CategoriesFilter filterMovies={filterMovies}/>
+            <CategoriesFilter filterMovies={filterMovies} filter={filter}/>
             <SortByFilter selectedValue = {sort} sortMovies={sortMovies}/>
         </div>
     )
@@ -37,8 +38,10 @@ export const FilterBarElement = ({sort, filterMovies, sortMovies}: Props): JSX.E
 
 const mapStateToProps = ({moviesState}: IState) => {
     const sort = moviesState.sort;
+    const filter = moviesState.filter
     return {
-        sort
+        sort,
+        filter
     };
 };
 

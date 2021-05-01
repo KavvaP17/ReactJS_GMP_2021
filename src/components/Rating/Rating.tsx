@@ -2,7 +2,7 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 
 type Props = {
-    rating: number
+    vote: number | undefined
 }
 
 const useStyles = createUseStyles({
@@ -21,12 +21,12 @@ const useStyles = createUseStyles({
 });
 
 
-export const Rating = ({ rating }: Props): JSX.Element => {
+export const Rating = ({ vote }: Props): JSX.Element => {
     const styles = useStyles();
 
     return (
         <div className={styles.rating}>
-            {rating}
+            {vote}
         </div>
     )
 }

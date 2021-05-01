@@ -18,7 +18,8 @@ export interface IMovieState {
     loading: boolean;
     error: Error | null | undefined;
     filter: IFilter,
-    sort: ISort
+    sort: ISort,
+    query: string
 }
 
 export interface IState {
