@@ -3,29 +3,42 @@ import { createUseStyles } from 'react-jss';
 
 import { FilterBar } from '../../components/FilterBar';
 import { Header } from '../../components/Header';
-import { MoviesList } from '../../components/MoviesList';
-import { Movie } from '../../components/MoviesList/MoviesList';
-
-type Props = {
-    mockMoviesList: Movie[]
-}
 
 const useStyles = createUseStyles({
+    homeConteiner: {
+        backgroundColor: '#232323',
+        minHeight: 'calc(100vh - 70px)'
+    },
     mainWrapper: {
         backgroundColor: '#232323',
         padding: '5px 5% 20px'
+    },
+    contentContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        padding: 40
+
+
+    },
+    messageContainer: {
+        fontSize: 40,
+        color: 'white'
     }
 });
 
-export const Home = ({ mockMoviesList }: Props): JSX.Element => {
+export const Home = (): JSX.Element => {
     const styles = useStyles();
+
     return (
-        <>
+        <div className={styles.homeConteiner}>
             <Header />
             <div className={styles.mainWrapper}>
                 <FilterBar />
-                <MoviesList moviesList={mockMoviesList} />
+                <div className={styles.contentContainer}>
+                    <p className={styles.messageContainer}>No Movie Found</p>
+                </div>
             </div>
-        </>
+        </div>
     )
 }
+

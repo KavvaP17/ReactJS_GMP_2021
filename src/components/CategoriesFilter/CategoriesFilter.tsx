@@ -1,27 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
+import { IFilter } from '../../interfaces';
+import { categories } from '../../config';
 
-type Category = {
-    title: string
+type Props = {
+    filter: string;
+    filterMovies: (filter: IFilter) => void;
 };
 
-const categoriesMock: Category[] = [
-    {
-        title: 'All',
-    },
-    {
-        title: 'Documentary',
-    },
-    {
-        title: 'Comedy',
-    },
-    {
-        title: 'Horror',
-    },
-    {
-        title: 'Crime',
-    },
-];
+type Category = {
+    id: IFilter,
+    title: string
+};
 
 const useStyles = createUseStyles({
     categoriesWrapper: {
@@ -46,20 +36,25 @@ const useStyles = createUseStyles({
     }
 })
 
-export const CategoriesFilter = (): JSX.Element => {
+export const CategoriesFilter = ({filterMovies, filter}: Props): JSX.Element => {
     const styles = useStyles();
-    const [activeCategorie, setActiveCategorie] = useState(categoriesMock[0]);
+    const [activeCategorie, setActiveCategorie] = useState(categories[0]);
+
+    useEffect(() => {
+        setActiveCategorie(categories.find(category => category.id === filter) || categories[0]);
+    }, [filter])
 
     const categorieClickHandler = (category: Category) => {
+        filterMovies(category.id);
         setActiveCategorie(category);
     };
 
     return (
         <ul className={styles.categoriesWrapper}>
-            {categoriesMock.map((category, index) => (
-                <li key={index}
+            {categories.map((category) => (
+                <li key={category.id}
                     className={`${styles.category} ${category.title ===  activeCategorie.title? styles.categoryActive : ''}`}
-                    onClick={()=>{categorieClickHandler(category)}}>
+                    onClick={()=>{categorieClickHandler(category as Category)}}>
                     {category.title}
                 </li>
             ))}

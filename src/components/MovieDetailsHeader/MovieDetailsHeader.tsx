@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { Logo } from '../Logo';
-import { Movie } from '../MoviesList/MoviesList';
 import { Rating } from '../Rating';
 import SearchIcon from '@material-ui/icons/Search';
+import { IMovie } from '../../interfaces';
+import { Link, Redirect } from 'react-router-dom';
 
 type Props = {
-    movie: Movie
+    movie: IMovie
 }
 
 const useStyles = createUseStyles({
@@ -32,9 +33,15 @@ const useStyles = createUseStyles({
         display: 'flex',
         margin: '40px 0'
     },
+    movieImgContainer: {
+        backgroundImage: 'url(../no-image.png)',
+        backgroundSize: 'cover',
+        height: 420,
+        width: 300
+    },
     movieImg: {
-        minWidth: 300,
-        height: 'auto'
+        height: 420,
+        width: 300
     },
     movieInfo: {
         margin: '20px 50px 0',
@@ -71,43 +78,61 @@ const useStyles = createUseStyles({
         color: 'white',
         fontSize: 22,
         lineHeight: '30px'
+    },
+    logoContainer : {
+        textDecoration : 'none'
     }
 });
 
 export const MovieDetailsHeader = ({ movie }: Props): JSX.Element => {
     const styles = useStyles();
+    const [selectedMovie, setSelectedMovie] = useState<IMovie>(movie)
+
+    useEffect(() => {
+        setSelectedMovie(movie);
+    }, [movie]);
 
     return (
-        <div className={styles.headerContainer}>
-            <div className={styles.topContainer}>
-                <Logo />
-                <SearchIcon className={styles.search}/>
-            </div>
-            <div className={styles.detailContainer}>
-                <img src={movie.image} className={styles.movieImg}></img>
-                <div className={styles.movieInfo}>
-                    <div className={styles.movieTitleContainer}>
-                        <h1 className={styles.movieTitle}>
-                            {movie.title}
-                        </h1>
-                        <Rating rating={movie.rating} />
+        !movie
+            ? <Redirect to="/" />
+            : (
+                <div className={styles.headerContainer}>
+                    <div className={styles.topContainer}>
+                        <Link className={styles.logoContainer} to={'/'}>
+                            <Logo />
+                        </Link>
+                        <Link to={`/search/`}>
+                            <SearchIcon className={styles.search} />
+                        </Link>
                     </div>
-                    <div className={styles.movieCategoryContainer}>
-                        {movie.category}
-                    </div>
-                    <div className={styles.movieAdditionalInfoContainer}>
-                        <div className={styles.movieYearContainer}>
-                            {movie.year}
+                    <div className={styles.detailContainer}>
+                        <div className={styles.movieImgContainer}>
+                            <img src={selectedMovie.poster_path} className={styles.movieImg}></img>
                         </div>
-                        <div className={styles.movieDurrationContainer}>
-                            {`${movie.duration} min`}
+                        <div className={styles.movieInfo}>
+                            <div className={styles.movieTitleContainer}>
+                                <h1 className={styles.movieTitle}>
+                                    {selectedMovie.title}
+                                </h1>
+                                <Rating vote={selectedMovie.vote_average} />
+                            </div>
+                            <div className={styles.movieCategoryContainer}>
+                                {selectedMovie.tagline}
+                            </div>
+                            <div className={styles.movieAdditionalInfoContainer}>
+                                <div className={styles.movieYearContainer}>
+                                    {(new Date(selectedMovie.release_date)).getFullYear()}
+                                </div>
+                                <div className={styles.movieDurrationContainer}>
+                                    {`${selectedMovie.runtime} min`}
+                                </div>
+                            </div>
+                            <p className={styles.movieDescription}>
+                                {selectedMovie.overview}
+                            </p>
                         </div>
                     </div>
-                    <p className={styles.movieDescription}>
-                        {movie.description}
-                    </p>
                 </div>
-            </div>
-        </div>
+            )
     )
 }

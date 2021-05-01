@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { Movie } from '../MoviesList/MoviesList';
+import { Link } from 'react-router-dom';
+import { IMovie } from '../../interfaces';
 import { MovieContextMenu } from '../MovieContextMenu';
 
 type Props = {
-    movie: Movie
+    movie: IMovie
 }
 
 const useStyles = createUseStyles({
@@ -12,15 +13,24 @@ const useStyles = createUseStyles({
         width: 300,
         margin: '20px 2%',
         position: 'relative',
+        textDecoration: 'none',
 
         '&:hover .context-menu': {
             display: 'block'
         }
 
     },
+    movieLink: {
+        textDecoration: 'none',
+    },
     movieImage: {
+        backgroundImage: 'url(../no-image.png)',
+        backgroundSize: 'cover',
+        height: 420,
+
         '& img': {
-            width: '100%'
+            width: '100%',
+            height: '100%'
         }
 
     },
@@ -72,26 +82,28 @@ export const MovieCard = ({ movie }: Props): JSX.Element => {
         setContextMenuVisibility(false);
     }
 
-    const {image, title, category, year} = movie;
+    const {poster_path, title, genres, release_date} = movie;
     return (
-        <div className={styles.movieCard}
-            onMouseLeave={closeContextMenu}>
-            <div className={`${styles.movieContextMenu} context-menu`}>
-                <MovieContextMenu
-                    isVisible={movieContexMenuIsVisible}
-                    onOpen={openContextMenu}
-                    onClose={closeContextMenu}/>
-            </div>
-            <div className={styles.movieImage}>
-                <img src={image}></img>
-            </div>
-            <div className={styles.movieDescription}>
-                <div>
-                    <div className='title'>{title}</div>
-                    <div className='category'>{category}</div>
+        <div className={styles.movieCard} onMouseLeave={closeContextMenu}>
+                <div className={`${styles.movieContextMenu} context-menu`}>
+                    <MovieContextMenu
+                        isVisible={movieContexMenuIsVisible}
+                        onOpen={openContextMenu}
+                        onClose={closeContextMenu}
+                        movie={movie}/>
                 </div>
-                <div className={styles.movieReleaseDate}>{year}</div>
-            </div>
+                <Link to={`/film/${movie.id}`} className={styles.movieLink}>
+                    <div className={styles.movieImage}>
+                        <img src={poster_path}></img>
+                    </div>
+                    <div className={styles.movieDescription}>
+                        <div>
+                            <div className='title'>{title}</div>
+                            <div className='category'>{genres.join(', ')}</div>
+                        </div>
+                        <div className={styles.movieReleaseDate}>{(new Date(release_date)).getFullYear()}</div>
+                    </div>
+                </Link>
         </div>
     )
 }

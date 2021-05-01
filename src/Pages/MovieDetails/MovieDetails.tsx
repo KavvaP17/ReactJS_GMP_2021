@@ -1,31 +1,49 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
+import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { FilterBar } from '../../components/FilterBar';
 import { MovieDetailsHeader } from '../../components/MovieDetailsHeader';
 import { MoviesList } from '../../components/MoviesList';
-import { Movie } from '../../components/MoviesList/MoviesList';
+import { IMovie, IState } from '../../interfaces';
 
 type Props = {
-    mockMoviesList: Movie[]
-}
+    moviesList: IMovie[],
+};
+
 
 const useStyles = createUseStyles({
+    detailsConteiner: {
+        backgroundColor: '#232323',
+        minHeight: 'calc(100vh - 70px)'
+    },
     mainWrapper: {
         backgroundColor: '#232323',
         padding: '5px 5% 20px'
     }
 });
 
-export const MovieDetails = ({ mockMoviesList }: Props): JSX.Element => {
+export const MovieDetailsElement = ({ moviesList }: Props): JSX.Element => {
     const styles = useStyles();
+    const { id } = useParams<{id: string}>();
+
     return (
-        <>
-            <MovieDetailsHeader movie={mockMoviesList[0]}/>
+        <div className={styles.detailsConteiner}>
+            <MovieDetailsHeader movie={moviesList.find((item => item.id === +id))}/>
             <div className={styles.mainWrapper}>
                 <FilterBar />
-                <MoviesList moviesList={mockMoviesList} />
+                <MoviesList />
             </div>
-        </>
+        </div>
     )
 }
+
+const mapStateToProps = ({moviesState}: IState) => {
+    const moviesList = moviesState.movies;
+    return {
+        moviesList
+    };
+};
+
+export const MovieDetails = connect(mapStateToProps)(MovieDetailsElement);
