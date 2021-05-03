@@ -4,7 +4,8 @@ import { createUseStyles } from 'react-jss';
 type Props = {
     title: string,
     color: 'red' | 'transparent' | 'redText',
-    clickHandler: () => void
+    type?: 'button' | 'submit' | 'reset' | undefined
+    clickHandler?: () => void
 };
 
 const useStyles = createUseStyles({
@@ -34,9 +35,9 @@ const useStyles = createUseStyles({
     }
 });
 
-export const Button = ({ title, color, clickHandler}: Props): JSX.Element => {
+export const Button = ({ title, color, clickHandler, type = 'button'}: Props): JSX.Element => {
     const styles = useStyles();
     return (
-        <button className={`${styles.button} ${styles[color]}`} onClick={clickHandler}>{title}</button>
+        <button className={`${styles.button} ${styles[color]}`} onClick={clickHandler} type={type}>{title}</button>
     )
 }

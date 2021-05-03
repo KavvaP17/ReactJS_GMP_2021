@@ -2,6 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 
 type ConfiguratonMode = 'development' | 'production' | 'none';
 
@@ -12,6 +13,7 @@ const config: webpack.Configuration = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].[contenthash].js',
+        publicPath: '/',
     },
     entry: './src/index.tsx',
     module: {
@@ -53,6 +55,15 @@ const config: webpack.Configuration = {
         new ESLintPlugin({
             extensions: ['js', 'jsx', 'ts', 'tsx'],
         }),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: './src/assets/',
+                    to: path.resolve(__dirname, 'dist')
+                }
+            ]
+        }),
+
     ],
     devtool: mode === 'development' ? 'inline-source-map' : undefined,
     devServer: {
