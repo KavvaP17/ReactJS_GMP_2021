@@ -55,7 +55,7 @@ const defaultFormValues: IMovie = {
     overview: '',
     runtime: 0,
     genres: [],
-    release_date: new Date(),
+    release_date: new Date(2021, 0, 1),
 };
 
 export const AddMovieModal = ({ addMovie, closeModal }: Props): JSX.Element => {
@@ -126,7 +126,7 @@ export const AddMovieModal = ({ addMovie, closeModal }: Props): JSX.Element => {
                 value={formik.values.title}
                 changeHandler={formik.handleChange} />
             {formik.touched.title && formik.errors.title
-                ? (<div className={styles.errorMessage}>{formik.errors.title}</div>)
+                ? (<div role='alert' className={styles.errorMessage}>{formik.errors.title}</div>)
                 : null}
             <p className={styles.lable}>release date</p>
             <DatePickerField
@@ -134,7 +134,7 @@ export const AddMovieModal = ({ addMovie, closeModal }: Props): JSX.Element => {
                 date={formik.values.release_date}
                 changeHandler={setDatePickerValue}/>
             {formik.touched.release_date && formik.errors.release_date
-                ? (<div className={styles.errorMessage}>{formik.errors.release_date}</div>)
+                ? (<div role='alert' className={styles.errorMessage}>{formik.errors.release_date}</div>)
                 : null}
             <p className={styles.lable}>movie url</p>
             <Input
@@ -144,7 +144,7 @@ export const AddMovieModal = ({ addMovie, closeModal }: Props): JSX.Element => {
                 value={formik.values.poster_path}
                 changeHandler={formik.handleChange} />
             {formik.touched.poster_path && formik.errors.poster_path
-                ? (<div className={styles.errorMessage}>{formik.errors.poster_path}</div>)
+                ? (<div role='alert' className={styles.errorMessage}>{formik.errors.poster_path}</div>)
                 : null}
             <p className={styles.lable}>genre</p>
             <MultiSelect
@@ -154,7 +154,7 @@ export const AddMovieModal = ({ addMovie, closeModal }: Props): JSX.Element => {
                 values={formik.values.genres}
                 changeHandler={setGenresValue}/>
             {formik.touched.genres && formik.errors.genres
-                ? (<div className={styles.errorMessage}>{formik.errors.genres}</div>)
+                ? (<div role='alert' className={styles.errorMessage}>{formik.errors.genres}</div>)
                 : null}
             <p className={styles.lable}>overview</p>
             <Input
@@ -164,7 +164,7 @@ export const AddMovieModal = ({ addMovie, closeModal }: Props): JSX.Element => {
                 value={formik.values.overview}
                 changeHandler={formik.handleChange} />
             {formik.touched.overview && formik.errors.overview
-                ? (<div className={styles.errorMessage}>{formik.errors.overview}</div>)
+                ? (<div role='alert' className={styles.errorMessage}>{formik.errors.overview}</div>)
                 : null}
             <p className={styles.lable}>runtime</p>
             <Input
@@ -174,7 +174,7 @@ export const AddMovieModal = ({ addMovie, closeModal }: Props): JSX.Element => {
                 value={formik.values.runtime}
                 changeHandler={formik.handleChange}/>
             {formik.touched.runtime && formik.errors.runtime
-                ? (<div className={styles.errorMessage}>{formik.errors.runtime}</div>)
+                ? (<div role='alert' className={styles.errorMessage}>{formik.errors.runtime}</div>)
                 : null}
             <div className={styles.buttonsContainer}>
                 <div className={styles.resetBtn}>
