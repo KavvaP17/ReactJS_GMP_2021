@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Logo renders Logo snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="logo-0-2-1"
+  >
+    <span
+      class="logoBold-0-2-2"
+    >
+      netflix
+    </span>
+    <span>
+      roulette
+    </span>
+  </div>
+</DocumentFragment>
+`;

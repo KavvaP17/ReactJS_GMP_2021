@@ -51,7 +51,6 @@ export const searchMovies = (query: string) => {
         try {
             const response = await fetch(`${API_URL}/movies?search=${query}&searchBy=title`);
             const movies = await response.json();
-            console.log(movies);
 
             dispatch({
                 type: MOVIES_SEARCH_SUCCESS,
