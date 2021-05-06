@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setQuery } from '../../actions/movies';
 import { IState } from '../../interfaces';
 import { Button } from '../Button';
 import { Input } from '../Input';
 
 type Props = {
     query: string,
-    setQuery: (query: string) => void
 };
 
 const useStyles = createUseStyles({
@@ -40,7 +38,7 @@ const useStyles = createUseStyles({
 
 });
 
-export const SearchBarElement = ({query, setQuery}: Props): JSX.Element => {
+export const SearchBarElement = ({query}: Props): JSX.Element => {
     const styles = useStyles();
     const [searchQuery, setSearchQuery] = useState(query || '');
 
@@ -52,9 +50,6 @@ export const SearchBarElement = ({query, setQuery}: Props): JSX.Element => {
         setSearchQuery(event.target.value as string);
     };
 
-    const search = (): void => {
-        setQuery(searchQuery);
-    }
     return (
         <div className={styles.searchBarContainer}>
             <span className={styles.searchInputLabel}>
@@ -66,7 +61,7 @@ export const SearchBarElement = ({query, setQuery}: Props): JSX.Element => {
                 </div>
                 <div className={styles.searchBtnWrapper}>
                     <Link to={`/search/${searchQuery}`}>
-                        <Button title='Search' color='red' clickHandler={search}/>
+                        <Button title='Search' color='red'/>
                     </Link>
                 </div>
             </div>
@@ -81,8 +76,4 @@ const mapStateToProps = ({moviesState}: IState) => {
     };
 };
 
-const mapDispatchToProps = {
-    setQuery
-}
-
-export const SearchBar = connect(mapStateToProps, mapDispatchToProps)(SearchBarElement);
+export const SearchBar = connect(mapStateToProps)(SearchBarElement);

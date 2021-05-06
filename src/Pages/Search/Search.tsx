@@ -42,11 +42,11 @@ const SearchElement = ({
     const { searchQuery } = useParams<{searchQuery: string}>();
 
     useEffect(() => {
-        const resultQuery = searchQuery;
-        setQuery(resultQuery);
-        searchMovies(resultQuery);
-
-    }, [searchMovies, query, searchQuery, setQuery]);
+        if (query !== searchQuery) {
+            setQuery(searchQuery);
+            searchMovies(searchQuery);
+        }
+    }, [query, searchQuery, setQuery, searchMovies]);
 
 
     return (

@@ -34,7 +34,7 @@ const useStyles = createUseStyles({
         margin: '40px 0'
     },
     movieImgContainer: {
-        backgroundImage: 'url(../no-image.png)',
+        backgroundImage: 'url(../static/no-image.png)',
         backgroundSize: 'cover',
         height: 420,
         width: 300

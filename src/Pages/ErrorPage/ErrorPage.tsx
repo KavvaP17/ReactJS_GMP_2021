@@ -42,7 +42,7 @@ export const ErrorPage = (): JSX.Element => {
             </div>
             <div className={styles.contentContainer}>
                 <p className={styles.errorText}>Page Not Found</p>
-                <img className={styles.errorImage} src="404.png"/>
+                <img className={styles.errorImage} src="static/404.png"/>
                 <Link to="/" className={styles.backBtn}>
                     <Button title='go back to home' color='redText' />
                 </Link>

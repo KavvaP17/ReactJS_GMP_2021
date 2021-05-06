@@ -144,9 +144,11 @@ export const MovieContextMenuElement = ({
                     ))}
                 </ul>
             </div>
-            <Modal ref={modal}>
-                {getModalContent()}
-            </Modal>
+            {typeof window !== 'undefined'? (
+                <Modal ref={modal}>
+                    {getModalContent()}
+                </Modal>) : null
+            }
         </>
     )
 }

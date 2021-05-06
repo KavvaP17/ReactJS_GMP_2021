@@ -24,7 +24,7 @@ const useStyles = createUseStyles({
         textDecoration: 'none',
     },
     movieImage: {
-        backgroundImage: 'url(../no-image.png)',
+        backgroundImage: 'url(../static/no-image.png)',
         backgroundSize: 'cover',
         height: 420,
 

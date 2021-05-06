@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { connect } from 'react-redux';
 import { IFilter, IMovie, ISort, IState } from '../../interfaces';
@@ -34,7 +34,6 @@ const useStyles = createUseStyles({
 
 export const MoviesListElement = ({ moviesList, filter, sort }: Props): JSX.Element => {
     const styles = useStyles();
-    const [resultMovieList, setesultMovieList] = useState<IMovie[]>([]);
 
     const filteringMovies = (filteredMovies: IMovie[]): IMovie[] => {
         if (filter === 'all') {
@@ -66,18 +65,14 @@ export const MoviesListElement = ({ moviesList, filter, sort }: Props): JSX.Elem
         return sortMovies(filteringMovies(movies));
     }
 
-    useEffect(() => {
-        setesultMovieList(moviesList);
-    }, [moviesList, filter, sort]);
-
     return (
         <div className={styles.moviesList}>
             <div className={styles.moviesNumber}>
-                <span className='bold'>{resultMovieList.length}</span>
-                <span>{` movie${resultMovieList.length > 1 ? 's' : ''} found`}</span>
+                <span className='bold'>{moviesList.length}</span>
+                <span>{` movie${moviesList.length > 1 ? 's' : ''} found`}</span>
             </div>
             <div className={styles.movieCards}>
-                {moviesProcessing(resultMovieList).map((movie) => (
+                {moviesProcessing(moviesList).map((movie) => (
                     <MovieCard key={movie.id} movie={movie} />
                 ))}
             </div>

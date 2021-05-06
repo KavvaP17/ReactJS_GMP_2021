@@ -59,9 +59,11 @@ export const HeaderElement = ({ addMovie }: Props): JSX.Element => {
                 </div>
                 <SearchBar />
             </div>
-            <Modal ref={modal}>
-                <AddMovieModal addMovie={addMovie} closeModal={closeModal}/>
-            </Modal>
+            {typeof window !== 'undefined'? (
+                <Modal ref={modal}>
+                    <AddMovieModal addMovie={addMovie} closeModal={closeModal}/>
+                </Modal>) : null
+            }
         </>
     )
 }
