@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { IState } from '../../interfaces';
 import { Button } from '../Button';
 import { Input } from '../Input';
+
+type Props = {
+    query: string,
+};
 
 const useStyles = createUseStyles({
     searchBarContainer: {
@@ -31,11 +38,18 @@ const useStyles = createUseStyles({
 
 });
 
-export const SearchBar = (): JSX.Element => {
+export const SearchBarElement = ({query}: Props): JSX.Element => {
     const styles = useStyles();
-    const search = (): void => {
-        console.log(search);
-    }
+    const [searchQuery, setSearchQuery] = useState(query || '');
+
+    useEffect(() => {
+        setSearchQuery(query || '');
+    }, [query]);
+
+    const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
+        setSearchQuery(event.target.value as string);
+    };
+
     return (
         <div className={styles.searchBarContainer}>
             <span className={styles.searchInputLabel}>
@@ -43,12 +57,23 @@ export const SearchBar = (): JSX.Element => {
             </span>
             <div className={styles.searchInputContainer}>
                 <div className={styles.searchInputWrapper}>
-                    <Input  type='search' placeholder='What do you want to watch?'/>
+                    <Input name="search" type='search' placeholder='What do you want to watch?' value={searchQuery} changeHandler={handleChange}/>
                 </div>
                 <div className={styles.searchBtnWrapper}>
-                    <Button title='Search' color='red' clickHandler={search}/>
+                    <Link to={`/search/${searchQuery}`}>
+                        <Button title='Search' color='red'/>
+                    </Link>
                 </div>
             </div>
         </div>
     )
 }
+
+const mapStateToProps = ({moviesState}: IState) => {
+    const query = moviesState.query;
+    return {
+        query
+    };
+};
+
+export const SearchBar = connect(mapStateToProps)(SearchBarElement);

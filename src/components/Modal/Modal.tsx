@@ -5,8 +5,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import { Footer } from '../Footer';
 import { Logo } from '../Logo';
 
-const modalElement = document.getElementById('modal-root') as Element;
-
 const useStyles = createUseStyles({
     modalWrapper: {
         position: 'fixed',
@@ -55,6 +53,7 @@ type Props = {
 };
 
 const ModalComponent = ({children, defaultOpened = false}: Props, ref: React.Ref<unknown>): JSX.Element => {
+    const modalElement = document.getElementById('modal-root') as Element;
     const styles = useStyles();
     const [isOpen, setIsOpen] = useState(defaultOpened);
 

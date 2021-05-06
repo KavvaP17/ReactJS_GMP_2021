@@ -1,95 +1,59 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+import { Store, Action } from 'redux';
 import { Footer } from './components/Footer';
 import { Logo } from './components/Logo';
 import { Home } from './Pages/Home';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import {
+    BrowserRouter,
+    Switch,
+    Route,
+} from 'react-router-dom';
 import { MovieDetails } from './Pages/MovieDetails';
+import { ErrorPage } from './Pages/ErrorPage';
+import { Search } from './Pages/Search';
+import { IState } from './interfaces';
+type Props = {
+    store: Store<IState, Action>
+    Router?: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+    location?: string | null,
+    context?: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+}
 
-const mockMoviesList = [
-    {
-        title: 'Fight Club',
-        category: 'Thriller',
-        year: '1999',
-        image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg',
-        description: 'It is based on the 1996 novel of the same name by Chuck Palahniuk. Norton plays the unnamed narrator, who is discontented with his white-collar job. He forms a "fight club" with soap salesman Tyler Durden (Pitt), and becomes embroiled in a relationship with a destitute woman, Marla Singer (Bonham Carter).',
-        rating: 4.9,
-        duration: 154,
-
-    },
-    {
-        title: 'Fight Club',
-        category: 'Thriller',
-        year: '1999',
-        image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg',
-        description: 'It is based on the 1996 novel of the same name by Chuck Palahniuk. Norton plays the unnamed narrator, who is discontented with his white-collar job. He forms a "fight club" with soap salesman Tyler Durden (Pitt), and becomes embroiled in a relationship with a destitute woman, Marla Singer (Bonham Carter).',
-        rating: 4.9,
-        duration: 154,
-    },
-    {
-        title: 'Fight Club',
-        category: 'Thriller',
-        year: '1999',
-        image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg',
-        description: 'It is based on the 1996 novel of the same name by Chuck Palahniuk. Norton plays the unnamed narrator, who is discontented with his white-collar job. He forms a "fight club" with soap salesman Tyler Durden (Pitt), and becomes embroiled in a relationship with a destitute woman, Marla Singer (Bonham Carter).',
-        rating: 4.9,
-        duration: 154,
-    },
-    {
-        title: 'Fight Club',
-        category: 'Thriller',
-        year: '1999',
-        image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg',
-        description: 'It is based on the 1996 novel of the same name by Chuck Palahniuk. Norton plays the unnamed narrator, who is discontented with his white-collar job. He forms a "fight club" with soap salesman Tyler Durden (Pitt), and becomes embroiled in a relationship with a destitute woman, Marla Singer (Bonham Carter).',
-        rating: 4.9,
-        duration: 154,
-    },
-    {
-        title: 'Fight Club',
-        category: 'Thriller',
-        year: '1999',
-        image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg',
-        description: 'It is based on the 1996 novel of the same name by Chuck Palahniuk. Norton plays the unnamed narrator, who is discontented with his white-collar job. He forms a "fight club" with soap salesman Tyler Durden (Pitt), and becomes embroiled in a relationship with a destitute woman, Marla Singer (Bonham Carter).',
-        rating: 4.9,
-        duration: 154,
-    },
-    {
-        title: 'Fight Club',
-        category: 'Thriller',
-        year: '1999',
-        image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg',
-        description: 'It is based on the 1996 novel of the same name by Chuck Palahniuk. Norton plays the unnamed narrator, who is discontented with his white-collar job. He forms a "fight club" with soap salesman Tyler Durden (Pitt), and becomes embroiled in a relationship with a destitute woman, Marla Singer (Bonham Carter).',
-        rating: 4.9,
-        duration: 154,
-    },
-    {
-        title: 'Fight Club',
-        category: 'Thriller',
-        year: '1999',
-        image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg',
-        description: 'It is based on the 1996 novel of the same name by Chuck Palahniuk. Norton plays the unnamed narrator, who is discontented with his white-collar job. He forms a "fight club" with soap salesman Tyler Durden (Pitt), and becomes embroiled in a relationship with a destitute woman, Marla Singer (Bonham Carter).',
-        rating: 4.9,
-        duration: 154,
-    },
-    {
-        title: 'Fight Club',
-        category: 'Thriller',
-        year: '1999',
-        image: 'https://thumbs.filmix.ac/posters/thumbs/w220/boycovskiy-klub-fight-club-1999_189_0.jpg',
-        description: 'It is based on the 1996 novel of the same name by Chuck Palahniuk. Norton plays the unnamed narrator, who is discontented with his white-collar job. He forms a "fight club" with soap salesman Tyler Durden (Pitt), and becomes embroiled in a relationship with a destitute woman, Marla Singer (Bonham Carter).',
-        rating: 4.9,
-        duration: 154,
-    }
-];
-
-export const App = (): JSX.Element  => {
+export const App = ({
+    Router = BrowserRouter,
+    location = null,
+    context = null,
+    store,
+}: Props): JSX.Element  => {
 
     return (
-        <ErrorBoundary>
-            <Home mockMoviesList={mockMoviesList} />
-            <MovieDetails mockMoviesList={mockMoviesList} />
-            <Footer>
-                <Logo></Logo>
-            </Footer>
-        </ErrorBoundary>
+        <Provider store={store}>
+            <ErrorBoundary>
+                <Router location={location} context={context}>
+                    <Switch>
+                        <Route exact path="/">
+                            <Home />
+                        </Route>
+                        <Route path="/film/:id">
+                            <MovieDetails />
+                        </Route>
+                        <Route path="/search/:searchQuery">
+                            <Search />
+                        </Route>
+                        <Route path="/search/">
+                            <Home />
+                        </Route>
+                        <Route path="*">
+                            <ErrorPage />
+                        </Route>
+                    </Switch>
+                    <Footer>
+                        <Logo></Logo>
+                    </Footer>
+                </Router>
+            </ErrorBoundary>
+        </Provider>
     );
 }
